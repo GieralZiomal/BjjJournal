@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Twoje Treningi</h1>
+    {% for element in returnData %}
+            <h1>Trening {{ element.dateOfTraining }}</h1>
+            <li>Godzina Treningu: {{ element.hourOfTraining }}</li>
+            <li>Długość Treningu: {{ element.trainingDuration }}</li>
+            <li>Typ Treningu: {{ element.typeOfWorkout }}</li>
+            <li>Ilość Walk: {{ element.howManyFights }}</li>
+            <li>Długość Walki: {{ element.fightDuration }}</li>
+            <li>Przerwa Między Walkami: {{ element.breakDuration }}</li>
+            <li>Zmęczenie(1-10): {{ element.tiredAfter }}</li>
+            <li>Kontuzje: {{ element.injuriesAfter }}</li>
+    {% endfor %}
+    <button type="submit" onclick="location.href='{% url 'Log-Out-View' %}'">Log out!</button>
+    <h1>Dodaj nowy trening!</h1>
+    <button type="submit" onclick="location.href='{% url 'Add-Training-View' %}'">Add!</button>
+</body>
+</html>
