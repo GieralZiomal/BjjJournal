@@ -3,6 +3,7 @@ from mainSite import views
 
 urlpatterns = [
     path('workouts/', views.trainings_list),
+    path('competitions/', views.comp_list),
     path('', views.homeView, name="Home-Page"),
     path('authenticationPage/', views.authView, name="Auth-Page"),
     path('register/', views.registerView, name="Register-Page"),

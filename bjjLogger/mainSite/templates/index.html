@@ -21,5 +21,11 @@
     <button type="submit" onclick="location.href='{% url 'Log-Out-View' %}'">Log out!</button>
     <h1>Dodaj nowy trening!</h1>
     <button type="submit" onclick="location.href='{% url 'Add-Training-View' %}'">Add!</button>
+    <h1>Twoje Zawody</h1>
+    {% for element in compData %}
+            <h1>Zawody {{ element.nameOfComp }}</h1>
+            <li>Data Zawodów: {{ element.dateOfComp }}</li>
+            <li>Miejsce: {{ element.place }}</li>
+    {% endfor %}
 </body>
 </html>

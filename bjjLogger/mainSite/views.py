@@ -3,8 +3,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from mainSite.models import Trening
-from mainSite.serializers import TrainingSerializer
+from mainSite.models import Trening, Zawody, CompFight
+from mainSite.serializers import TrainingSerializer, ZawodySerializer, CompFightSerializer
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 import requests
@@ -26,15 +26,38 @@ def trainings_list(request):
         else:
             return Response("Unauthorized", status=status.HTTP_401_UNAUTHORIZED)
     
+@api_view(['GET', 'POST'])
+def comp_list(request):
+        if request.method == 'GET':
+            user_competitions = Zawody.objects
+            user_comp_fights = CompFight.objects
+            comp_serializer = ZawodySerializer(user_competitions, many=True)
+            comp_fights_serializer = CompFightSerializer(user_comp_fights, many=True)
+            return Response(comp_serializer.data, status=status.HTTP_200_OK)
+        elif request.method == 'POST':
+            serializer = TrainingSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response("Unauthorized", status=status.HTTP_401_UNAUTHORIZED)
+
 def homeView(request):
     if request.user.is_authenticated:
-        r = requests.get('http://127.0.0.1:8000/workouts', params=request.GET)
-        respon = r.json()
-        finalArr = []
-        for x in range(len(respon)):
-            if respon[x]["owner"] == request.user.id:
-                finalArr.append(respon[x])
-        return render(request, template_name="index.html", context={"returnData":finalArr})
+        fights_r = requests.get('http://127.0.0.1:8000/workouts', params=request.GET)
+        f_respon = fights_r.json()
+        comp_r = requests.get('http://127.0.0.1:8000/competitions', params=request.GET)
+        c_respon = comp_r.json()
+        fight_finalArr = []
+        comp_finalArr = []
+        for x in range(len(f_respon)):
+            if f_respon[x]["owner"] == request.user.id:
+                fight_finalArr.append(f_respon[x])
+        for x in range(len(c_respon)):
+            if c_respon[x]["owner"] == request.user.id:
+                comp_finalArr.append(c_respon[x])
+        return render(request, template_name="index.html", context={"returnData":fight_finalArr, "compData":comp_finalArr})
     else:
         return redirect('/authenticationPage/')
     
