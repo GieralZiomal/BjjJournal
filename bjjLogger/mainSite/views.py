@@ -9,10 +9,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 import requests
 from django.contrib.auth.models import User
-from .forms import LoginForm, RegisterForm, AddTrainingForm
+from .forms import LoginForm, RegisterForm, AddTrainingForm, AddCompForm
 
 @api_view(['GET', 'POST'])
-def trainings_list(request):
+def trainings_list(request):  
         if request.method == 'GET':
             user_workouts = Trening.objects
             serializer = TrainingSerializer(user_workouts, many=True)
@@ -45,9 +45,10 @@ def comp_list(request):
 
 def homeView(request):
     if request.user.is_authenticated:
-        fights_r = requests.get('http://127.0.0.1:8000/workouts', params=request.GET)
+        params = {'password': 'bjj4life'}
+        fights_r = requests.get('http://127.0.0.1:8000/workouts', params={**request.GET, **params})
         f_respon = fights_r.json()
-        comp_r = requests.get('http://127.0.0.1:8000/competitions', params=request.GET)
+        comp_r = requests.get('http://127.0.0.1:8000/competitions', params={**request.GET, **params})
         c_respon = comp_r.json()
         fight_finalArr = []
         comp_finalArr = []
@@ -109,4 +110,16 @@ def addTrainingSite(request):
         injuriesAfter = form.cleaned_data['injuriesAfter']
         trening = Trening.objects.create(owner=request.user, dateOfTraining=dateOfTraining, hourOfTraining=hourOfTraining, trainingDuration=trainingDuration, typeOfWorkout=typeOfWorkout, howManyFights=howManyFights, fightDuration=fightDuration, breakDuration=breakDuration, tiredAfter=tiredAfter, injuriesAfter=injuriesAfter)
         trening.save()
+        return redirect('/')
     return render(request, "addPage.html", {'form': form})
+
+def addCompSite(request):
+    form = AddCompForm(request.POST)
+    if form.is_valid():
+        nameOfComp = form.cleaned_data['nameOfComp']
+        dateOfComp = form.cleaned_data['dateOfComp']
+        place = form.cleaned_data['place']
+        compt = Zawody.objects.create(owner=request.user, nameOfComp=nameOfComp, dateOfComp=dateOfComp, place=place)
+        compt.save()
+        return redirect('/')
+    return render(request, "addComp.html", {'form': form})

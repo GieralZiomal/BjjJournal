@@ -24,3 +24,8 @@ class AddTrainingForm(forms.Form):
     breakDuration = forms.IntegerField()
     tiredAfter = forms.IntegerField()
     injuriesAfter = forms.CharField(max_length=10)
+
+class AddCompForm(forms.Form):
+    nameOfComp = forms.CharField(max_length=20)
+    dateOfComp = forms.DateField()
+    place = forms.IntegerField()

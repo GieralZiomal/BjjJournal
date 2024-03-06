@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In!</title>
+    <title>Add New Comp!</title>
 </head>
 <body>
+    <h1>Dodaj Nowe Zawody</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Register</button>
+        <input type="submit" value="Add!">
     </form>
 </body>
 </html>
