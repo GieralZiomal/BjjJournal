@@ -9,9 +9,9 @@ class TrainingSerializer(serializers.ModelSerializer):
 class ZawodySerializer(serializers.ModelSerializer):
     class Meta:
         model = Zawody
-        fields = ['owner','nameOfComp','dateOfComp','place']
+        fields = ['comp_id','owner','nameOfComp','dateOfComp','place']
 
 class CompFightSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompFight
-        fields = ['compFight_id','owner','whichComp','resultOfFight','endOfFight']
+        fields = ['owner','whichComp','resultOfFight','endOfFight']

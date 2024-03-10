@@ -33,7 +33,11 @@ def comp_list(request):
             user_comp_fights = CompFight.objects
             comp_serializer = ZawodySerializer(user_competitions, many=True)
             comp_fights_serializer = CompFightSerializer(user_comp_fights, many=True)
-            return Response(comp_serializer.data, status=status.HTTP_200_OK)
+            combined_data = {
+            "competitions": comp_serializer.data,
+            "comp_fights": comp_fights_serializer.data
+            }
+            return Response(combined_data, status=status.HTTP_200_OK)
         elif request.method == 'POST':
             serializer = TrainingSerializer(data=request.data)
             if serializer.is_valid():
@@ -51,14 +55,26 @@ def homeView(request):
         comp_r = requests.get('http://127.0.0.1:8000/competitions', params={**request.GET, **params})
         c_respon = comp_r.json()
         fight_finalArr = []
-        comp_finalArr = []
+        ff_arr = []
+        
         for x in range(len(f_respon)):
             if f_respon[x]["owner"] == request.user.id:
                 fight_finalArr.append(f_respon[x])
-        for x in range(len(c_respon)):
-            if c_respon[x]["owner"] == request.user.id:
-                comp_finalArr.append(c_respon[x])
-        return render(request, template_name="index.html", context={"returnData":fight_finalArr, "compData":comp_finalArr})
+                
+        for comp in c_respon.get("competitions", []):
+            comp_fights_arr = []
+            comp_finalArr = []
+            print(comp)
+            if comp["owner"] == request.user.id:
+                comp_finalArr.append(comp)
+                
+            for comp_fight in c_respon.get("comp_fights", []):
+                if comp_fight["owner"] == request.user.id and comp_fight["whichComp"] == comp["comp_id"]:
+                    comp_fights_arr.append(comp_fight)
+                    
+            ff_arr.append([comp_finalArr, comp_fights_arr])
+        
+        return render(request, template_name="index.html", context={"returnData": fight_finalArr, "compData": ff_arr})
     else:
         return redirect('/authenticationPage/')
     

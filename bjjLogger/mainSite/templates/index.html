@@ -12,7 +12,8 @@
     <h1>Dodaj nowy trening!</h1>
     <button type="submit" onclick="location.href='{% url 'Add-Training-View' %}'">Add!</button>
     {% for element in returnData %}
-            <h1>Trening {{ element.dateOfTraining }}</h1>
+        <h2>Trening {{ element.dateOfTraining }}</h2>
+        <ul>
             <li>Godzina Treningu: {{ element.hourOfTraining }}</li>
             <li>Długość Treningu: {{ element.trainingDuration }}</li>
             <li>Typ Treningu: {{ element.typeOfWorkout }}</li>
@@ -21,14 +22,24 @@
             <li>Przerwa Między Walkami: {{ element.breakDuration }}</li>
             <li>Zmęczenie(1-10): {{ element.tiredAfter }}</li>
             <li>Kontuzje: {{ element.injuriesAfter }}</li>
+        </ul>
     {% endfor %}
     <h1>Twoje Zawody</h1>
     <h1>Dodaj nowe zawody!</h1>
     <button type="submit" onclick="location.href='{% url 'Add-Comp-View' %}'">Add!</button>
     {% for element in compData %}
-            <h1>Zawody {{ element.nameOfComp }}</h1>
-            <li>Data Zawodów: {{ element.dateOfComp }}</li>
-            <li>Miejsce: {{ element.place }}</li>
+        {% for comp in element.0 %}
+            <h2>Zawody {{ comp.nameOfComp }}</h2>
+            <ul>
+            <li>Data: {{ comp.dateOfComp }}</li>
+            <li>Miejsce: {{ comp.place }}</li>
+        {% endfor %}
+            <h2>Walki:</h2>
+        {% for comp_fight in element.1 %}
+            <li>Wynik: {{ comp_fight.resultOfFight }}</li>
+            <li>Zakończenie: {{ comp_fight.endOfFight }}</li>
+            </ul>
+        {% endfor %}
     {% endfor %}
 </body>
 </html>

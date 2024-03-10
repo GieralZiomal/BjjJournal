@@ -40,17 +40,17 @@ class Trening(models.Model):
         ordering = ['-dateOfTraining']
 
 class Zawody(models.Model):
+    comp_id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(User, related_name='competition', on_delete=models.CASCADE)
     nameOfComp = models.CharField(max_length=20)
     dateOfComp = models.DateField()
     place = models.IntegerField()
-    
+
     class Meta:
-       ordering = ['-dateOfComp']
+        ordering = ['-dateOfComp']
 
 class CompFight(models.Model):
-    compFight_id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(User, related_name='compFight', on_delete=models.CASCADE)
-    whichComp = models.ForeignKey(Zawody, related_name='competition', on_delete=models.CASCADE)
+    whichComp = models.ForeignKey(Zawody, related_name='comp_fights', on_delete=models.CASCADE)
     resultOfFight = models.CharField(max_length=10, choices=FIGHT_CHOICES)
     endOfFight = models.CharField(max_length=20, choices=END_CHOICES)
