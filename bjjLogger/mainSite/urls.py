@@ -10,5 +10,6 @@ urlpatterns = [
     path('login/', views.loginView, name="Login-Page"),
     path('logout/', views.logOutView, name="Log-Out-View"),
     path('addWorkout/', views.addTrainingSite, name="Add-Training-View"),
-    path('addComp/', views.addCompSite, name="Add-Comp-View"),
+    path('comp/add', views.addCompSite, name="Add-Comp-View"),
+    path('fight/add', views.addFightView, name="add_fight_view"),
 ]

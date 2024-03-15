@@ -40,6 +40,10 @@
             <li>Zakończenie: {{ comp_fight.endOfFight }}</li>
             </ul>
         {% endfor %}
+        <form method="post" action="{% url 'add_fight_view' %}">
+        {% csrf_token %}
+        <button type="submit" name="add_fight_btn">Add New Fight!</button>
+        </form>
     {% endfor %}
 </body>
 </html>

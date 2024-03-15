@@ -1,4 +1,5 @@
 from django import forms
+from mainSite.models import Zawody
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
@@ -29,3 +30,22 @@ class AddCompForm(forms.Form):
     nameOfComp = forms.CharField(max_length=20)
     dateOfComp = forms.DateField()
     place = forms.IntegerField()
+
+class AddFightForm(forms.Form):
+    FIGHT_CHOICES = {
+
+        "Win" : "W",
+        "Lose" : "L",
+
+    }
+
+    END_CHOICES = {
+
+        "Submission" : "SUB",
+        "Points" : "PO",
+        "Disqualification" : "DQ",
+        "Choice" : "CHO",
+
+    }
+    resultOfFight = forms.ChoiceField(choices=FIGHT_CHOICES)
+    endOfFight = forms.ChoiceField(choices=END_CHOICES)

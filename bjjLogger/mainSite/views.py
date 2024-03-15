@@ -5,11 +5,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from mainSite.models import Trening, Zawody, CompFight
 from mainSite.serializers import TrainingSerializer, ZawodySerializer, CompFightSerializer
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 import requests
 from django.contrib.auth.models import User
-from .forms import LoginForm, RegisterForm, AddTrainingForm, AddCompForm
+from .forms import LoginForm, RegisterForm, AddTrainingForm, AddCompForm, AddFightForm
 
 @api_view(['GET', 'POST'])
 def trainings_list(request):  
@@ -64,7 +64,6 @@ def homeView(request):
         for comp in c_respon.get("competitions", []):
             comp_fights_arr = []
             comp_finalArr = []
-            print(comp)
             if comp["owner"] == request.user.id:
                 comp_finalArr.append(comp)
                 
@@ -74,7 +73,7 @@ def homeView(request):
                     
             ff_arr.append([comp_finalArr, comp_fights_arr])
         
-        return render(request, template_name="index.html", context={"returnData": fight_finalArr, "compData": ff_arr})
+        return render(request, template_name="index.html", context={"returnData": fight_finalArr, "compData": ff_arr, "object_id": request.POST.get('object_id'),})
     else:
         return redirect('/authenticationPage/')
     
@@ -139,3 +138,18 @@ def addCompSite(request):
         compt.save()
         return redirect('/')
     return render(request, "addComp.html", {'form': form})
+
+def addFightView(request):
+    object_id = request.POST.get('object_id')
+    if request.method == 'POST':
+        form = AddFightForm(request.POST)
+        if form.is_valid():
+            rOf = form.cleaned_data['resultOfFight']
+            eOf = form.cleaned_data['endOfFight']
+            compt = CompFight.objects.create(owner=request.user, whichComp_id=object_id, resultOfFight=rOf, endOfFight=eOf)
+            compt.save()
+            return redirect('/')
+    else:
+        form = AddFightForm()
+
+    return render(request, "addCompFight.html", {'form': form})
