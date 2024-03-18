@@ -8,8 +8,10 @@ from mainSite.serializers import TrainingSerializer, ZawodySerializer, CompFight
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 import requests
-from django.contrib.auth.models import User
+from mainSite.models import MyUser
+from django.contrib import messages
 from .forms import LoginForm, RegisterForm, AddTrainingForm, AddCompForm, AddFightForm
+from django.core.exceptions import ValidationError
 
 @api_view(['GET', 'POST'])
 def trainings_list(request):  
@@ -84,24 +86,42 @@ def loginView(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
+            username = form.cleaned_data['user_auth_dat']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
                 return redirect('/')
+            else:
+                messages.success(request, "Wrong Username or Password!")
+                return redirect('/login')
+    
     else:
         form = LoginForm()
     
     return render(request, 'login_page.html', {'form': form})
+
 def registerView(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             username1 = form.cleaned_data['username']
+            user_email = form.cleaned_data['user_email']
             password1 = form.cleaned_data['password']
-            user = User.objects.create_user(username=username1, password=password1)
-            user.save()
+            rep_password1 = form.cleaned_data['rep_password']
+            belt = form.cleaned_data['belt']
+            date_of_birth = form.cleaned_data['date_of_birth']
+            if password1 == rep_password1:
+                user = MyUser.objects.create_user(username=username1, password=password1, email=user_email, belt=belt, date_of_birth=date_of_birth)
+                user.save()
+                return render(request, 'confirmEmail.html')
+            else:
+                messages.success(request, "Passwords are not same!")
+                return redirect('/register')
+        else:
+            messages.success(request, "Forms Are Empty!")
+            return redirect('/register')
+
     else:
         form = RegisterForm()
     
@@ -144,6 +164,7 @@ def addFightView(request):
     if request.method == 'POST':
         form = AddFightForm(request.POST)
         if form.is_valid():
+            object_id = form.cleaned_data['object_id']
             rOf = form.cleaned_data['resultOfFight']
             eOf = form.cleaned_data['endOfFight']
             compt = CompFight.objects.create(owner=request.user, whichComp_id=object_id, resultOfFight=rOf, endOfFight=eOf)

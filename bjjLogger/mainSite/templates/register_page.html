@@ -11,6 +11,15 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Register</button>
+        {% if messages %}
+
+            {% for message in messages %}
+            
+                <p style="color: red;">{{message}}</p>
+            
+            {% endfor %}
+
+        {% endif %}
     </form>
 </body>
 </html>

@@ -1,13 +1,26 @@
 from django import forms
-from mainSite.models import Zawody
+from mainSite.models import Zawody, User
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=100)
+    user_auth_dat = forms.CharField(label="Email",max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
 
 class RegisterForm(forms.Form):
-    username = forms.CharField(max_length=100)
-    password = forms.CharField(widget=forms.PasswordInput)
+    BELT_CHOICES = [
+        ("White", "White"),
+        ("Blue", "Blue"),
+        ("Purple", "Purple"),
+        ("Brown", "Brown"),
+        ("Black", "Black"),
+        ("Red", "Red"),
+    ]
+
+    username = forms.CharField(label="Username", max_length=100)
+    user_email = forms.CharField(label="Email", widget=forms.EmailInput)
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)
+    rep_password = forms.CharField(label="Repeat Password", widget=forms.PasswordInput)
+    belt = forms.ChoiceField(choices=BELT_CHOICES)
+    date_of_birth = forms.DateField()    
 
 class AddTrainingForm(forms.Form):
     TYPE_CHOICES = {
