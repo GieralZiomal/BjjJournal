@@ -1,4 +1,5 @@
 from django.http import HttpResponse, JsonResponse
+import time
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 from rest_framework.response import Response
@@ -12,6 +13,11 @@ from mainSite.models import MyUser
 from django.contrib import messages
 from .forms import LoginForm, RegisterForm, AddTrainingForm, AddCompForm, AddFightForm
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.sites.shortcuts import get_current_site
 
 @api_view(['GET', 'POST'])
 def trainings_list(request):  
@@ -75,7 +81,7 @@ def homeView(request):
                     
             ff_arr.append([comp_finalArr, comp_fights_arr])
         
-        return render(request, template_name="index.html", context={"returnData": fight_finalArr, "compData": ff_arr, "object_id": request.POST.get('object_id'),})
+        return render(request, template_name="index.html", context={"returnData": fight_finalArr, "compData": ff_arr, "object_id": request.POST.get('object_id'), "username": request.user})
     else:
         return redirect('/authenticationPage/')
     
@@ -116,15 +122,14 @@ def registerView(request):
                 user.save()
                 return render(request, 'confirmEmail.html')
             else:
-                messages.success(request, "Passwords are not same!")
+                messages.error(request, "Passwords do not match!")
                 return redirect('/register')
         else:
-            messages.success(request, "Forms Are Empty!")
+            messages.error(request, "Forms are empty!")
             return redirect('/register')
-
     else:
         form = RegisterForm()
-    
+
     return render(request, 'register_page.html', {'form': form})
 
 def logOutView(request):
@@ -174,3 +179,16 @@ def addFightView(request):
         form = AddFightForm()
 
     return render(request, "addCompFight.html", {'form': form})
+
+def SettingsView(request):
+    currentUser = MyUser.objects.filter(username=request.user.username)
+    return render(request, "settingsTemp.html", context={"userInfo": currentUser})
+
+def ChangeBeltView(request):
+    if request.method == 'POST':
+        selectData = request.POST.get('beltSelect')
+        current_user = get_object_or_404(MyUser, username=request.user.username)
+        current_user.belt = selectData
+        current_user.save()
+        messages.success(request, "Changed!")
+        return redirect("/settings")

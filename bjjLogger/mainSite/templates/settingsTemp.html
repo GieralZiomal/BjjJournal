@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <script src="{% static 'scripts/beltLevel.js' %}"></script>
+</head>
+<body>
+
+    <h1>Settings</h1>
+    {% if messages %}
+
+            {% for message in messages %}
+            
+                <p style="color: rgb(0, 255, 0);">{{message}}</p>
+            
+            {% endfor %}
+
+        {% endif %}
+
+    <form method="post" action="{% url 'Change-Belt-View' %}">
+        {% csrf_token %}
+        {% for element in userInfo %}
+            <label for="beltSelect">Belt Level</label>
+            <select id="belts" name="beltSelect">
+                <option value="White" {% if element.belt == "White" %}selected{% endif %}>White</option>
+                <option value="Blue" {% if element.belt == "Blue" %}selected{% endif %}>Blue</option>
+                <option value="Purple" {% if element.belt == "Purple" %}selected{% endif %}>Purple</option>
+                <option value="Brown" {% if element.belt == "Brown" %}selected{% endif %}>Brown</option>
+                <option value="Black" {% if element.belt == "Black" %}selected{% endif %}>Black</option>
+                <option value="Red" {% if element.belt == "Red" %}selected{% endif %}>Red</option>
+            </select>
+        {% endfor %}
+        <input type="submit" name="submitBtn" value="Change">
+    </form>
+    
+</body>
+</html>

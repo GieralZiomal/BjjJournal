@@ -12,4 +12,6 @@ urlpatterns = [
     path('addWorkout/', views.addTrainingSite, name="Add-Training-View"),
     path('comp/add', views.addCompSite, name="Add-Comp-View"),
     path('fight/add', views.addFightView, name="add_fight_view"),
+    path('settings/', views.SettingsView, name="Settings-View"),
+    path('settings/changebelt', views.ChangeBeltView, name="Change-Belt-View"),
 ]

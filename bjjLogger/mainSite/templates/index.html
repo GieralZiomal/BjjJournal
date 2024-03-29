@@ -4,10 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static\styles\indexStyle.css">
+    <script src="static\scripts\indexDropdown.js"></script>
     <title>Home</title>
 </head>
 <body>
-    <button type="submit" onclick="location.href='{% url 'Log-Out-View' %}'">Log out!</button>
+    <h1>Witaj {{ request.user }}</h1>
+    <div class="dropdown">
+        <button onclick="dropSettings()" class="dropbtn">Menu</button>
+        <div id="myDropdown" class="dropdown-content">
+          <a href="{% url 'Settings-View' %}" target="_blank">Ustawienia</a>
+          <button type="submit" onclick="location.href='{% url 'Log-Out-View' %}'">Log out!</button>
+        </div>
+    </div>
     <h1>Twoje Treningi</h1>
     <h1>Dodaj nowy trening!</h1>
     <button type="submit" onclick="location.href='{% url 'Add-Training-View' %}'">Add!</button>
