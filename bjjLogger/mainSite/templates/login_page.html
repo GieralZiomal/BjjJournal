@@ -1,26 +1,61 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In!</title>
-</head>
-<body>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-        {% if messages %}
+{% extends 'authTemp.html' %}
 
-            {% for message in messages %}
-            
-                <p style="color: red;">{{message}}</p>
-            
-            {% endfor %}
+{% block headblock %}
 
-        {% endif %}
-    </form>
+    <style>
 
-</body>
-</html>
+        h1 
+        {
+
+            font-size: 4vw;
+
+        }
+        a 
+        {
+
+            text-decoration: none;
+            color: white;
+
+        }
+        a:hover
+        {
+
+            color: rgb(198, 198, 198);
+        }
+        .dField 
+        {
+
+            width: 100%;
+
+        }
+
+    </style>
+
+{% endblock %}
+
+{% block authblock %}
+    <section class="TitleSection">
+        <h1>Logowanie</h1>
+    </section>
+
+    <section class="ButtonsSection">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" style="width: 100%;">Login</button>
+            {% if messages %}
+    
+                {% for message in messages %}
+                
+                    <p style="color: red;">{{message}}</p>
+                
+                {% endfor %}
+    
+            {% endif %}
+        </form>
+
+        <a href="{% url 'Register-Page' %}"><p>Nie masz konta? Zarejestruj się!</p></a>
+
+    </section>   
+{% endblock %} 
+        

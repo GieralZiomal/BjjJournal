@@ -2,8 +2,8 @@ from django import forms
 from mainSite.models import Zawody, User
 
 class LoginForm(forms.Form):
-    user_auth_dat = forms.CharField(label="Email",max_length=100)
-    password = forms.CharField(widget=forms.PasswordInput)
+    user_auth_dat = forms.CharField(label="Email",max_length=100, widget=forms.TextInput(attrs={'class': 'dField'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'dField'}))
 
 class RegisterForm(forms.Form):
     BELT_CHOICES = [
@@ -15,12 +15,12 @@ class RegisterForm(forms.Form):
         ("Red", "Red"),
     ]
 
-    username = forms.CharField(label="Username", max_length=100)
-    user_email = forms.CharField(label="Email", widget=forms.EmailInput)
-    password = forms.CharField(label="Password", widget=forms.PasswordInput)
-    rep_password = forms.CharField(label="Repeat Password", widget=forms.PasswordInput)
+    username = forms.CharField(label="Username", max_length=100, widget=forms.TextInput(attrs={'class': 'dField'}))
+    user_email = forms.CharField(label="Email", widget=forms.EmailInput(attrs={'class': 'dField'}))
+    password = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'class': 'dField'}))
+    rep_password = forms.CharField(label="Repeat Password", widget=forms.PasswordInput(attrs={'class': 'dField'}))
     belt = forms.ChoiceField(choices=BELT_CHOICES)
-    date_of_birth = forms.DateField()    
+    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'class': 'dField'}))    
 
 class AddTrainingForm(forms.Form):
     TYPE_CHOICES = {

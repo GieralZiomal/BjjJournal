@@ -1,26 +1,12 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'styles\authPageStyle.css' %}">
-    <title>Sign In / Sign Up</title>
-</head>
-<body>
-    <main>
-        
-       
-        <section class="authMenu">
-            <section class="TitleSection">
-                <h1>BjjTracker</h1>
-                <h3>Track your progress!</h3></section>
-            <section class="ButtonsSection">
-                <button onclick="location.href='{% url 'Login-Page' %}'"><a href="/login">LOGOWANIE</a></button>
-                <button onclick="location.href='{% url 'Register-Page' %}'"><a href="/register">REJESTRACJA</a></button>
-            </section>
-        </section>
+{% extends 'authTemp.html' %}
 
-    </main>
-</body>
-</html>
+
+{% block authblock %}
+<section class="TitleSection">
+    <h1>BjjTracker</h1>
+    <h3>Track your progress!</h3></section>
+<section class="ButtonsSection">
+    <button onclick="location.href='{% url 'Login-Page' %}'"><a href="/login">LOGOWANIE</a></button>
+    <button onclick="location.href='{% url 'Register-Page' %}'"><a href="/register">REJESTRACJA</a></button>
+</section>
+{% endblock %} 
