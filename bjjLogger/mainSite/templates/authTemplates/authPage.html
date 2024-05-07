@@ -1,0 +1,51 @@
+{% extends 'authTemplates/authTemp.html' %}
+{% load static %}
+
+{% block authblock %}
+<main>
+
+    <div class="left-img-div">
+    <img src="{% static 'images/main-img.jpg' %}" alt="BJJ Match Image" width="500" height="300" style="border-radius: 3px;">
+    </div>
+
+    <section>
+        <h1>Notuj Swoje Postępy!</h1>
+        <p>Zanurz się w świat BJJ z naszym panelem. Niezależnie od Twojego poziomu zaawansowania, nasze zasoby, porady ekspertów i społeczność entuzjastów BJJ pomogą Ci w osiągnięciu sukcesu na macie.<br>Dołącz do nas już dziś i podbijaj swoje umiejętności z nami!</p>
+        <div class="join-now-btn"><button onclick="location.href='{% url 'Register-Page' %}'">DOŁĄCZ TERAZ!</button><p style="font-size: 1vw;"><a href="{% url 'Login-Page' %}">Masz już konto? Zaloguj się</a></p></div>
+    </section>
+
+</main>
+<article>
+
+    <div class="article-div">
+        <h1 style="font-size: 4vw;">FAQ</h1>
+        <h3 style="font-size: 2vw;">Odpowiedzi na nurtujące Cię pytania.</h3>
+        
+        <div class="wraper">
+            <div class="question">
+
+                <div class="title" onclick="dropSettings(0)"><h1>Pytanie1<i id="arrow-id-0" class="fa-solid fa-arrow-right"></i></h1></div>
+                <div class="answer">Odp</div>
+
+            </div>
+            <div class="question">
+
+                <div class="title" onclick="dropSettings(1)"><h1>Pytanie2 <i id="arrow-id-1" class="fa-solid fa-arrow-right"></i></h1></div>
+                <div class="answer">Odp</div>
+
+            </div>    
+        </div>
+    
+    </div>
+
+</article>
+<script>
+    function dropSettings(index) {
+    var arrowIcon = document.getElementById("arrow-id-" + index);
+    arrowIcon.classList.toggle('fa-arrow-down');
+    arrowIcon.classList.toggle('fa-arrow-right');
+    var answers = document.getElementsByClassName("answer");
+    answers[index].classList.toggle("show");
+}
+</script>
+{% endblock %} 

@@ -4,89 +4,205 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 
 }
 
-a 
+header 
 {
 
-    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding-top: 20px;
 
+}
+
+.top-bar 
+{
+    width: 10%;
+    display: flex;
+    justify-content: center;
+}
+
+.top-bar-dropdown 
+{
+    background-color: #0b0b0b;
+    color: white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+}
+
+.top-div
+{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
 }
 
 main
 {
 
-    background-color: #3d555b;
-    min-height: 50vw;
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40vw;
+    background-color: #0b0b0b;
+    margin-top: 15px;
 
 }
 
-.authMenu 
+section 
 {
 
-    background-color: rgba(0, 0, 0, 0.8);
-    width: 60%;
-    min-height: 40vw;
+    color: white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    color: white;
-    gap: 120px;
-    border-radius: 15px;
+    gap: 20px;
+    width: 50%;
+    height: 300px;
 
 }
 
-.authMenu button 
+section h1 
 {
-    color: white;
-    width: 70%;
-    background-color: #003e4e;
-    border-radius: 5px;
-    height: 5vw;
+
+    font-size: 3.5vw;
 
 }
 
-.authMenu button:hover
+section p 
 {
-    
-    background-color: #006983;
+
+    font-size: 1.5vw;
+
+}
+
+.left-img-div 
+{
+
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    height: auto;
+
+}
+
+.join-now-btn button
+{
+
+    width: 100%;
+    margin-bottom: 20px;
+    height: 4vw;
+    border-radius: 5%;
+    background-color:  #5783db;
+    font-weight: bold;
+    color: white;
+
+}
+
+.join-now-btn a
+{
+
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+
+}
+
+.join-now-btn button:hover
+{
+
+    background-color:  #2a63d5;
     cursor: pointer;
 
 }
 
-.authMenu button a
+article
 {
 
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f5f5f5;
+
+}
+
+.article-div 
+{
+
+    width: 70%;
+    height: auto;
+
+}
+
+.article-div .wraper 
+{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    
+    margin-top: 16px;
+    display: flex;
+
+}
+
+.question 
+{
+
+    width: 100%;
+    height: auto;
+    background-color: white;
+    flex-basis: 100%;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    margin-top: 16px;
+
+}
+
+.answer 
+{
+
+    display: none;
+
+}
+
+.show {
+    display: block;
+}
+
+footer
+{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 5vw;
+    background-color: #0b0b0b;
     color: white;
 
 }
 
-.authMenu .TitleSection 
+.footer-row 
 {
 
     display: flex;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-
-}
-
-.authMenu .ButtonsSection 
-{
-
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
     gap: 30px;
 
 }

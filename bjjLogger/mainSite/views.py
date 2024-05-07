@@ -86,7 +86,7 @@ def homeView(request):
         return redirect('/authenticationPage/')
     
 def authView(request):
-    return render(request, template_name="authPage.html")
+    return render(request, "authTemplates/authPage.html")
 
 def loginView(request):
     if request.method == 'POST':
@@ -105,7 +105,7 @@ def loginView(request):
     else:
         form = LoginForm()
     
-    return render(request, 'login_page.html', {'form': form})
+    return render(request, 'authTemplates/login_page.html', {'form': form})
 
 def registerView(request):
     if request.method == 'POST':
@@ -130,7 +130,7 @@ def registerView(request):
     else:
         form = RegisterForm()
 
-    return render(request, 'register_page.html', {'form': form})
+    return render(request, 'authTemplates/register_page.html', {'form': form})
 
 def logOutView(request):
     logout(request)

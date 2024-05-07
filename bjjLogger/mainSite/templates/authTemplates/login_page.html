@@ -1,4 +1,4 @@
-{% extends 'authTemp.html' %}
+{% extends 'authTemplates/authTemp.html' %}
 
 {% block headblock %}
 
@@ -20,7 +20,7 @@
         a:hover
         {
 
-            color:  rgb(198, 198, 198);
+            color: rgb(198, 198, 198);
         }
         .dField 
         {
@@ -35,14 +35,14 @@
 
 {% block authblock %}
     <section class="TitleSection">
-        <h1>Rejestracja</h1>
+        <h1>Logowanie</h1>
     </section>
 
     <section class="ButtonsSection">
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" style="width: 100%;">Zarejestruj</button>
+            <button type="submit" style="width: 100%; margin-top: 10px;">Login</button>
             {% if messages %}
     
                 {% for message in messages %}
@@ -54,8 +54,8 @@
             {% endif %}
         </form>
 
-        <a href="{% url 'Login-Page' %}"><p>Masz już konto? Zaloguj się!</p></a>
+        <a href="{% url 'Register-Page' %}"><p>Nie masz konta? Zarejestruj się!</p></a>
 
-    </section>
+    </section>   
 {% endblock %} 
         

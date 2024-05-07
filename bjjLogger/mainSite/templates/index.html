@@ -1,26 +1,44 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static\styles\indexStyle.css">
-    <script src="static\scripts\indexDropdown.js"></script>
-    <title>Home</title>
-</head>
-<body>
-    <h1>Witaj {{ request.user }}</h1>
-    <div class="dropdown">
-        <button onclick="dropSettings()" class="dropbtn">Menu</button>
-        <div id="myDropdown" class="dropdown-content">
-          <a href="{% url 'Settings-View' %}" target="_blank">Ustawienia</a>
-          <button type="submit" onclick="location.href='{% url 'Log-Out-View' %}'">Log out!</button>
+{% extends 'indexTemp.html' %}
+
+    {% block styleblock %}
+    <style>
+        .topBar  
+        {
+
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+
+        }
+
+        h1 
+        {
+
+            order: 2;
+
+        }
+
+    </style>
+    {% endblock %}
+
+    {% block bodyblock %}
+    <header class="topBar">
+        <h1>Witaj {{ request.user }}</h1>
+        <div class="dropdown">
+            <button onclick="dropSettings()" class="dropbtn">Menu</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="{% url 'Settings-View' %}" target="_blank">Ustawienia</a>
+                <button type="submit" onclick="location.href='{% url 'Log-Out-View' %}'">Log out!</button>
+            </div>
         </div>
-    </div>
-    <h1>Twoje Treningi</h1>
-    <h1>Dodaj nowy trening!</h1>
-    <button type="submit" onclick="location.href='{% url 'Add-Training-View' %}'">Add!</button>
-    {% for element in returnData %}
+    </header>
+
+    <section>
+
+        <h1>Twoje Treningi</h1>
+        <h1>Dodaj nowy trening!</h1>
+        <button type="submit" onclick="location.href='{% url 'Add-Training-View' %}'">Add!</button>
+        {% for element in returnData %}
         <h2>Trening {{ element.dateOfTraining }}</h2>
         <ul>
             <li>Godzina Treningu: {{ element.hourOfTraining }}</li>
@@ -32,11 +50,16 @@
             <li>Zmęczenie(1-10): {{ element.tiredAfter }}</li>
             <li>Kontuzje: {{ element.injuriesAfter }}</li>
         </ul>
-    {% endfor %}
-    <h1>Twoje Zawody</h1>
-    <h1>Dodaj nowe zawody!</h1>
-    <button type="submit" onclick="location.href='{% url 'Add-Comp-View' %}'">Add!</button>
-    {% for element in compData %}
+        {% endfor %}
+
+    </section>
+
+    <section>
+
+        <h1>Twoje Zawody</h1>
+        <h1>Dodaj nowe zawody!</h1>
+        <button type="submit" onclick="location.href='{% url 'Add-Comp-View' %}'">Add!</button>
+        {% for element in compData %}
         {% for comp in element.0 %}
             <h2>Zawody {{ comp.nameOfComp }}</h2>
             <ul>
@@ -53,6 +76,7 @@
         {% csrf_token %}
         <button type="submit" name="add_fight_btn">Add New Fight!</button>
         </form>
-    {% endfor %}
-</body>
-</html>
+        {% endfor %}
+
+    </section>
+    {% endblock %}
